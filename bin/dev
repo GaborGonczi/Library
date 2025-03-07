@@ -1,0 +1,27 @@
+#!/bin/bash
+
+PROJECT_ROOT=$(cd "$(dirname "$(dirname "$0")")"; pwd)
+SAIL="$PROJECT_ROOT/vendor/bin/sail"
+
+if [ ! -f "$SAIL" ]; then
+  echo " Laravel Sail not installed! Run: php artisan fullstack:sail"
+  exit 1
+fi
+
+case "$1" in
+  start)
+    echo " Starting the container and an interactive shell"
+    $SAIL up -d && $SAIL shell
+    ;;
+  stop)
+    echo " Shut down sail"
+    $SAIL down
+    ;;
+  restart)
+    echo " Restart sail..."
+    $SAIL down && $SAIL up -d && $SAIL shell
+    ;;
+  *)
+    echo "Használat: dev [start|stop|restart]"
+    ;;
+esac
